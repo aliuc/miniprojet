@@ -5,7 +5,6 @@
 %%
 
 [0-9]+          { return I; }
-[A-Za-z0-9]+    { return V; }
 :=              { return Af; }
 Skip            { return Sk; }
 ;               { return Se; }
@@ -17,5 +16,7 @@ do              { return Do; }
 \+              { return Pl; }
 \-              { return Mo; }
 \*              { return Mu; }
+[A-Za-z0-9]+    { yylval.id = strdup(yytext);
+                  return V; }
 
 %%
