@@ -3,6 +3,9 @@
 #include <stdio.h>
 
 int yylex();
+int yyparse();
+int yyerror(char*);
+
 %}
 
 %token <int> I
