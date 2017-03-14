@@ -2,9 +2,9 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-typedef enum { id, val, opr } nodeType;
+typedef enum { id, val, opr } nodeEnum;
 typedef struct nodeTypeTag {
-  enum cellType nodetype;
+  nodeEnum type;
   
   union {
     int val;
