@@ -1,6 +1,8 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include "tree.h"
 
 int yylex();
 int yyparse();
@@ -13,35 +15,36 @@ int yyerror(char*);
   int   nb;
 }
 
+%start C
+
 %token <int> I
 %token <str> Id
 %token Af Sk Se If Th El Wh Do Pl Mo Mu
 
-%start C
 
 %%
 
-E: E Pl T
- | E Mo T
- | T
+E: Pl T              { $$ = $2; }
+ | Mo T              { $$ = make_operator(NULL, '-', $2); }
+ | T                 { $$ = $1; }
  ;
  
  
-T: T Mu F
- | F
+T: T Mu F            { $$ = make_operator($1, '*', $3); }
+ | F                 { $$ = $1; }
  ;
 
-F: '(' E ')'
- | I
- | V
+F: '(' E ')'         { $$ = $2; }
+ | I                 { $$ = make_variable(&$1); printf("%s", yylval.a_variable);}
+ | V                 { $$ = make_number($1); }
  ;
 
-C: V Af E
- | Sk
- | '(' C ')'
- | If E Th C El C
- | Wh E Do C
- | C Se C
+C: V Af E            { $$ = $3; }
+ | Sk                { return 1; }
+ | '(' C ')'         { $$ = $2; }
+ | If E Th C El C    { if ($2 != 0) { $$ = $4; } else { $$ = $6; } }
+ | Wh E Do C         { while ($2 != 0) { $$ = $4; }}
+ | E
  ;
 
 %%
