@@ -19,5 +19,7 @@ do           { return Do; }
 \*           { return Mu; }
 [A-Za-z0-9]+ { yylval.str = strdup(yytext);
                return V; }
+[\t\n]       { return 0; }
+.            { return yytext[0]; }
 
 %%
