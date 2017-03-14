@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "cell.h"
+#include "struct.h"
 
 int yylex();
 int yyparse();
 int yyerror(char*);
 
-int retValue (int oper, int nb1, int nb2);
+int retValue (int opr, int nb1, int nb2);
 
 %}
 
@@ -51,10 +51,10 @@ C: V Af E            { $$ = $3; }
 
 %%
 
-int retValue(int oper, int nb1, int nb2){
+int retValue(int opr, int nb1, int nb2){
 nodeType *p;
 p = malloc(sizeof(nodeType));
-p->oper = oper;
+p->opr = opr;
 p->nb1 = nb1;
 p->nb2 = nb2;
 return(pointer2output(p)); }
