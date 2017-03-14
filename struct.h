@@ -18,6 +18,6 @@ typedef struct nodeTypeTag {
 
 nodeType* nbr (int cst); //constants
 nodeType* var (char* id); //identifiers
-nodeType* opr (int operator, int nbOfOperators, nodeTypeTag* operator[1]); //operators
+nodeType* opr (int operator, int nbOfOperators); //operators
 
 #endif
