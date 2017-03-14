@@ -50,3 +50,8 @@ int yyerror(char *s){
   fprintf(stderr, "***ERROR:%s***\n", s);
   return -1;
 }
+
+int main(int argn, char **argv){
+	yyparse();
+	return 0;
+}
