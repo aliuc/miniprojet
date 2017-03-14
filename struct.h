@@ -2,7 +2,7 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-typedef enum { id, val, opr } nodeEnum;
+typedef enum { val, id, opr } nodeEnum;
 typedef struct nodeTypeTag {
   nodeEnum type;
   
