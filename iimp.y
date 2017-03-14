@@ -8,9 +8,16 @@ int yyerror(char*);
 
 %}
 
+%union {
+  char *str;
+  int   nb;
+}
+
 %token <int> I
 %token <str> Id
 %token Af Sk Se If Th El Wh Do Pl Mo Mu
+
+%start C
 
 %%
 
@@ -38,3 +45,8 @@ C: V Af E
  ;
 
 %%
+
+int yyerror(char *s){
+  fprintf(stderr, "***ERROR:%s***\n", s);
+  return -1;
+}
