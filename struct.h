@@ -2,12 +2,12 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-typedef enum { val, id, opr } nodeEnum;
+typedef enum { constant, identifier, operator } nodeEnum;
 typedef struct nodeTypeTag {
   nodeEnum type;
   
   union {
-    int val;
+    int cst;
     char* id;
     struct {int operator;
             int nbOfOperators;
@@ -16,7 +16,7 @@ typedef struct nodeTypeTag {
   };
 } nodeType;
 
-nodeType* nbr (int val); //constants
+nodeType* nbr (int cst); //constants
 nodeType* var (char* id); //identifiers
 nodeType* opr (int operator, int nbOfOperators, nodeTypeTag* operator[1]); //operators
 
