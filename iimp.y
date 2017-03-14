@@ -8,6 +8,8 @@ int yylex();
 int yyparse();
 int yyerror(char*);
 
+int retValue (int oper, int nb1, int nb2);
+
 %}
 
 %union {
@@ -25,29 +27,37 @@ int yyerror(char*);
 %%
 
 E: Pl T              { $$ = $2; }
- | Mo T              { $$ = make_operator(NULL, '-', $2); }
+ | Mo T              { $$ = retValue('-', NULL, $2); }
  | T                 { $$ = $1; }
  ;
  
  
-T: T Mu F            { $$ = make_operator($1, '*', $3); }
+T: T Mu F            { $$ = retValue('*', $1, $3); }
  | F                 { $$ = $1; }
  ;
 
 F: '(' E ')'         { $$ = $2; }
- | I                 { $$ = make_variable(&$1); printf("%s", yylval.a_variable);}
- | V                 { $$ = make_number($1); }
+ | I                 { $$ = $1; }
+ | V                 { $$ = $1; }
  ;
 
 C: V Af E            { $$ = $3; }
  | Sk                { return 1; }
  | '(' C ')'         { $$ = $2; }
- | If E Th C El C    { if ($2 != 0) { $$ = $4; } else { $$ = $6; } }
+ | If E Th C El C    { $$ = $2 ? $4 : $6 }
  | Wh E Do C         { while ($2 != 0) { $$ = $4; }}
  | E
  ;
 
 %%
+
+int retValue(int oper, int nb1, int nb2){
+nodeType *p;
+p = malloc(sizeof(nodeType));
+p->oper = oper;
+p->nb1 = nb1;
+p->nb2 = nb2;
+return(pointer2output(p)); }
 
 int yyerror(char *s){
   fprintf(stderr, "***ERROR:%s***\n", s);
